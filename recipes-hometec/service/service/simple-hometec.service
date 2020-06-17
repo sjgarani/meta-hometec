@@ -1,0 +1,11 @@
+[Unit]
+Description=Hometec systemd service.
+
+[Service]
+Type=simple
+ExecStart=/bin/sh /usr/bin/hometec.sh
+User=root
+ExecReload=/bin/kill -HUP $MAINPID
+
+[Install]
+WantedBy=multi-user.target
