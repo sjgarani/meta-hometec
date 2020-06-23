@@ -5,16 +5,15 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda
 PR = "r0"
 
 DEPENDS += "erlang"
-
-SRCREV = "${AUTOREV}"
-
-PV = "0.1+git${SRCPV}"
-
-SRC_URI = "git://github.com/sjgarani/hometec.git;branch=dev_erl;protocol=git"
-
 RDEPENDS_${PN} = "erlang"
 
+SRCREV = "${AUTOREV}"
+BPV = "0.1.0"
+PV = "${BPV}+gitr${SRCPV}"
+
 S = "${WORKDIR}/git"
+
+SRC_URI = "git://github.com/sjgarani/hometec.git;branch=dev_erl;protocol=git"
 
 SRC_DIR = "${libdir}/erlang/lib/${P}/src"
 EBIN_DIR = "${libdir}/erlang/lib/${P}/ebin"
@@ -30,21 +29,21 @@ INITSCRIPT_NAME = "hometec.otp.system"
 INITSCRIPT_PARAMS = "defaults 75"
 
 do_install_append() {
-    cd ${S}/sys ; erl -noshell -pa ${S}/src -s systools make_script hometec -s erlang halt
+    cd ${S}/sys
     install -d ${D}${SRC_DIR}
     install -m 0755 ${S}/src/hometec.app.src ${D}${SRC_DIR}
     install -m 0755 ${S}/src/*.erl ${D}${SRC_DIR}
     install -d ${D}${EBIN_DIR}
-    install -m 0755 ${S}/src/hometec.app ${D}${EBIN_DIR}
-    install -m 0755 ${S}/src/*.beam ${D}${EBIN_DIR}
+    install -m 0755 ${B}/src/hometec.app ${D}${EBIN_DIR}
+    install -m 0755 ${B}/src/*.beam ${D}${EBIN_DIR}
     install -d ${D}${CONF_DIR}
     install -m 0755 ${S}/sys/hometec.config ${D}${CONF_DIR}
-    install -m 0755 ${S}/sys/hometec.boot ${D}${CONF_DIR}
+    install -m 0755 ${B}/sys/hometec.boot ${D}${CONF_DIR}
     install -d ${D}${sysconfdir}/init.d
     install -m 0755 ${S}/sys/hometec.otp.system ${D}${sysconfdir}/init.d
     install -d ${D}${bindir}
-    install -m 0755 ${S}/sys/hometec.start ${D}${bindir}
-    install -m 0755 ${S}/sys/hometec.stop ${D}${bindir}
+    install -m 0755 ${B}/sys/hometec.start ${D}${bindir}
+    install -m 0755 ${B}/sys/hometec.stop ${D}${bindir}
 }
 
 FILES_${PN}  = "${EBIN_DIR}/hometec.app"
