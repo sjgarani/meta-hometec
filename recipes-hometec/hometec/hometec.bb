@@ -23,13 +23,13 @@ CONF_DIR = "${sysconfdir}/hometec.d"
 # failing due running erl program compiled for arm running on x86_64
 EXTRA_OECONF = "--host=x86_64-linux --target=x86_64-linux"
 
+INITSCRIPT_NAME = "hometec.otp.system"
+INITSCRIPT_PARAMS = "defaults 10"
+
 inherit autotools update-rc.d
 
-INITSCRIPT_NAME = "hometec.otp.system"
-INITSCRIPT_PARAMS = "defaults 75"
-
 do_install_append() {
-    cd ${S}/sys
+    cd ${S}/sys; /usr/bin/erl -noshell -pa ${S}/src -s systools make_script hometec -s erlang halt
     install -d ${D}${SRC_DIR}
     install -m 0755 ${S}/src/hometec.app.src ${D}${SRC_DIR}
     install -m 0755 ${S}/src/*.erl ${D}${SRC_DIR}
