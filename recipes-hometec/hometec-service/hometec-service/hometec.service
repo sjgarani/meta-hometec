@@ -1,0 +1,11 @@
+[Unit]
+Description=Hometec systemd service.
+
+[Service]
+Type=simple
+User=root
+ExecStart=/usr/bin/erl -noshell -boot /etc/hometec.d/hometec -config /etc/hometec.d/hometec -sname hometec -setcookie hometec
+ExecReload=/bin/kill -HUP $MAINPID
+
+[Install]
+WantedBy=multi-user.target

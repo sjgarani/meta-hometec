@@ -35,6 +35,8 @@ do_install_append() {
     install -d ${D}${CONF_DIR}
     install -m 0755 ${S}/sys/hometec.config ${D}${CONF_DIR}
     install -m 0755 ${B}/sys/hometec.boot ${D}${CONF_DIR}
+    install -d ${D}${bindir}
+    install -m 0755 ${B}/sys/hometec.start ${D}${bindir}
 }
 
 FILES_${PN}  = "${EBIN_DIR}/hometec.app"
@@ -43,6 +45,7 @@ FILES_${PN} += "${EBIN_DIR}/hometec_sup.beam"
 FILES_${PN} += "${EBIN_DIR}/hometec.beam"
 FILES_${PN} += "${CONF_DIR}/hometec.config"
 FILES_${PN} += "${CONF_DIR}/hometec.boot"
+FILES_${PN} += "${bindir}/hometec.start"
 
 FILES_${PN}-dev  = "${SRC_DIR}/hometec.app.src"
 FILES_${PN}-dev += "${SRC_DIR}/hometec_app.erl"
