@@ -2,9 +2,10 @@
 Description=Hometec systemd service.
 
 [Service]
-Type=simple
+Type=forking
 User=root
-ExecStart=/usr/bin/erl -noshell -boot /etc/hometec.d/hometec -config /etc/hometec.d/hometec -sname hometec -setcookie hometec
+PIDFile=/var/run/hometec.pid
+ExecStart=/usr/bin/hometec.start
 ExecReload=/bin/kill -HUP $MAINPID
 
 [Install]
